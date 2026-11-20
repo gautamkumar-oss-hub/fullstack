@@ -1,0 +1,48 @@
+{
+  "name": "hospital-appointment-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "generate:api": "openapi-typescript http://localhost:8080/v3/api-docs -o src/api/generated.ts",
+    "generate:api:file": "openapi-typescript ../docs/openapi.json -o src/api/generated.ts",
+    "sync:api": "curl --fail --silent http://localhost:8080/v3/api-docs | node --input-type=module -e \"let data=''; for await (const chunk of process.stdin) data += chunk; process.stdout.write(JSON.stringify(JSON.parse(data), null, 2) + '\\n')\" > ../docs/openapi.json && npm run generate:api:file",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@hookform/resolvers": "7.0.7",
+    "@mui/icons-material": "9.5.0",
+    "@mui/material": "9.5.0",
+    "@tanstack/react-query": "5.108.0",
+    "lucide-react": "1.75.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-hook-form": "7.92.0",
+    "react-router-dom": "7.18.5",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.12",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "@vitest/coverage-v8": "5.1.1",
+    "jsdom": "31.0.1",
+    "openapi-typescript": "7.13.0",
+    "oxlint": "1.90.0",
+    "picomatch": "4.0.7",
+    "typescript": "5.9.3",
+    "vite": "8.3.8",
+    "vitest": "5.1.1"
+  }
+}

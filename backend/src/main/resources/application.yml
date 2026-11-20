@@ -1,0 +1,102 @@
+spring:
+  application:
+    name: hospital-appointment-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/hospital_appointment}
+    username: ${DB_USERNAME:hospital_app}
+    password: ${DB_PASSWORD}
+    hikari:
+      connection-init-sql: SET TIME ZONE 'UTC'
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    init-sql: SET TIME ZONE 'UTC'
+  jackson:
+    default-property-inclusion: non_null
+  threads:
+    virtual:
+      enabled: true
+
+server:
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+  error:
+    include-message: never
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true
+  info:
+    env:
+      enabled: true
+
+info:
+  application:
+    name: ${spring.application.name}
+    phase: identity
+
+application:
+  name: Hospital Appointment Platform
+  clinic-time-zone: ${CLINIC_TIME_ZONE:UTC}
+  default-booking-horizon-days: 90
+  default-proposal-hold-hours: 24
+  default-patient-change-cutoff-hours: 24
+  identity:
+    issuer: ${IDENTITY_ISSUER:http://localhost:8080}
+    audience: ${IDENTITY_AUDIENCE:hospital-appointment-spa}
+    key-id: ${IDENTITY_KEY_ID:identity-local-2026}
+    private-key: ${IDENTITY_PRIVATE_KEY_PEM:}
+    public-key: ${IDENTITY_PUBLIC_KEY_PEM:}
+    access-token-lifetime: 10m
+    refresh-idle-lifetime: 7d
+    refresh-absolute-lifetime: 30d
+    verification-lifetime: 24h
+    recovery-lifetime: 15m
+    mfa-lifetime: 5m
+    maximum-challenge-attempts: 5
+    resend-interval: 1m
+    cookie-secure: ${IDENTITY_COOKIE_SECURE:true}
+    mfa-bypass: ${IDENTITY_MFA_BYPASS:false}
+    exposed-mfa-code: ${IDENTITY_EXPOSED_MFA_CODE:}
+    email:
+      provider: ${IDENTITY_EMAIL_PROVIDER:smtp}
+      from: ${IDENTITY_EMAIL_FROM:no-reply@localhost.test}
+    dummy-password-hash: ${IDENTITY_DUMMY_PASSWORD_HASH:$2a$12$yS2xW8Vv78Y8n7KGoMlaTOWmO.kBtpG7aR3U9DIsH3xPrwAK6B28K}
+    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173}
+    bootstrap:
+      enabled: ${IDENTITY_BOOTSTRAP_ENABLED:false}
+      email: ${IDENTITY_BOOTSTRAP_EMAIL:}
+      password: ${IDENTITY_BOOTSTRAP_PASSWORD:}
+      first-name: ${IDENTITY_BOOTSTRAP_FIRST_NAME:System}
+      last-name: ${IDENTITY_BOOTSTRAP_LAST_NAME:Administrator}
+
+springdoc:
+  api-docs:
+    enabled: ${OPENAPI_ENABLED:false}
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: ${SWAGGER_UI_ENABLED:false}
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    disable-swagger-default-url: true
+
+logging:
+  level:
+    root: INFO
+    org.hibernate.orm.deprecation: ERROR

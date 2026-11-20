@@ -1,0 +1,27 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    password: ${DB_PASSWORD:local-development-only-2026}
+  jpa:
+    show-sql: false
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+application:
+  identity:
+    cookie-secure: ${IDENTITY_COOKIE_SECURE:false}
+    bootstrap:
+      enabled: ${IDENTITY_BOOTSTRAP_ENABLED:false}
+      email: ${IDENTITY_BOOTSTRAP_EMAIL:}
+      password: ${IDENTITY_BOOTSTRAP_PASSWORD:}

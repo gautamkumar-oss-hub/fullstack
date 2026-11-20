@@ -1,0 +1,20 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+!.env.test.example
+
+# Build output
+target/
+dist/
+node_modules/
+*.log
+coverage/
+
+# Local tools and IDE
+.idea/
+.vscode/
+*.iml
+.DS_Store
+playwright-report/
+test-results/

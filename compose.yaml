@@ -1,0 +1,28 @@
+name: hospital-appointment
+
+services:
+  postgres:
+    image: postgres:18.1-alpine
+    container_name: hospital-appointment-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-hospital_appointment}
+      POSTGRES_USER: ${POSTGRES_USER:-hospital_app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env for local development}
+      TZ: UTC
+      PGTZ: UTC
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    stop_grace_period: 30s
+
+volumes:
+  postgres_data:
+    name: hospital-appointment-postgres-data

@@ -1,0 +1,11 @@
+spring:
+  config:
+    activate:
+      on-profile: identity-dev
+
+application:
+  identity:
+    mfa-bypass: true
+    exposed-mfa-code: "123456"
+    email:
+      provider: development
